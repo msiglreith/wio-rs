@@ -4,6 +4,7 @@ use {w};
 use std::mem::{forget};
 use std::ops::{Deref, DerefMut};
 
+#[derive(Debug)]
 pub struct ComPtr<T>(*mut T);
 impl<T> ComPtr<T> {
     /// Creates a `ComPtr` to wrap a raw pointer.
@@ -40,7 +41,7 @@ impl<T> DerefMut for ComPtr<T> {
 }
 impl<T> Clone for ComPtr<T> {
     fn clone(&self) -> Self {
-        unsafe { 
+        unsafe {
             self.as_unknown().AddRef();
             ComPtr::new(self.0)
         }
